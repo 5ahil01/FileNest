@@ -17,7 +17,7 @@ const FolderManager = () => {
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="mb-6">
         <p className="text-2xl font-semibold text-gray-800 mb-4">
-          Folder Manager
+          File and Docs
         </p>
         <div className="flex gap-4">
           <input
@@ -28,17 +28,17 @@ const FolderManager = () => {
           />
           <button
             onClick={createNewFolder}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            className="px-4 py-2 bg-black text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
           >
-            Create New Folder
+            Create Folder
           </button>
         </div>
       </div>
 
       <div>
-        <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <ul className="w-[400px]">
           {rootFolders.map((folder) => (
-            <li key={folder.id} className="bg-white shadow rounded-md p-4">
+            <li key={folder.id} className="bg-white shadow rounded-md p-4 ">
               <Folder folderData={folder} />
             </li>
           ))}
