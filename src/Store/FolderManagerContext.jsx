@@ -110,7 +110,6 @@ function folderReducer(state, action) {
     }
 
     case "SAVE_FILE": {
-      console.log(action.payload);
       const updatedFolders = state.folders.map((folder) => {
         return folder.id === action.payload.folderId
           ? {
@@ -124,9 +123,20 @@ function folderReducer(state, action) {
           : folder;
       });
 
-      const folderX = updatedFolders.find(
-        (folder) => folder.id === action.payload.folderId
-      );
+      const updatedTabList = state.tabList.map((file) => {
+        return file.id === action.payload.fileId
+          ? {
+              ...file,
+              content: action.payload.updatedFileContent,
+            }
+          : file;
+      });
+
+      // const folderX = updatedFolders.find(
+      //   (folder) => folder.id === action.payload.folderId
+      // );
+
+      // console.log(folderX.files);
 
       return {
         ...state,
@@ -134,6 +144,7 @@ function folderReducer(state, action) {
           ...state.activeFile,
           content: action.payload.updatedFileContent,
         },
+        tabList: updatedTabList,
         folders: updatedFolders,
       };
     }

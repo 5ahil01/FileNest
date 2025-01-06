@@ -11,20 +11,20 @@ import {
   faAlignCenter,
 } from "@fortawesome/free-solid-svg-icons";
 
-const TextEditor = ({ activeFile }) => {
+const TextEditor = () => {
   const [content, setContent] = useState("");
   const editorRef = useRef(null);
-  const { saveFile } = useContext(folderContext);
+  const { saveFile, activeFile } = useContext(folderContext);
 
   useEffect(() => {
-    console.log(activeFile);
-    const savedContent = activeFile.content;
+    if (activeFile) {
+      console.log(activeFile.name, "Inside of If");
+      const sanitizedContent = DOMPurify.sanitize(activeFile.content);
+      setContent(sanitizedContent);
 
-    if (savedContent) {
-      setContent(savedContent);
-      // Set initial content if exists
+      // Directly update the contentEditable div
       if (editorRef.current) {
-        editorRef.current.innerHTML = DOMPurify.sanitize(savedContent);
+        editorRef.current.innerHTML = sanitizedContent;
       }
     }
   }, [activeFile]);
