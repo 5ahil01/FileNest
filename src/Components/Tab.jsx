@@ -22,13 +22,13 @@ const Tab = ({ tabData, activeFile }) => {
     >
       <p className="truncate">{`${tabData.name}/${tabData.parentFolderName}`}</p>
       <button
-        className="ml-2 p-1 invisible group-hover:visible  "
+        className="ml-2 p-1 flex items-center invisible group-hover:visible  "
         onClick={(e) => {
           e.stopPropagation();
           removeFileFromTabList(tabData.id);
         }}
       >
-        <FontAwesomeIcon icon={faX} className="h-4 w-4" />
+        <FontAwesomeIcon icon={faX} className="h-2" />
       </button>
     </li>
   );

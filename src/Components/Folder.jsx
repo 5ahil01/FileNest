@@ -5,6 +5,7 @@ import {
   faFolder,
   faAngleDown,
   faAngleRight,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import File from "./File";
 import DropDown from "./DropDown";
@@ -60,7 +61,7 @@ const Folder = ({ folderData }) => {
   }
 
   return (
-    <div className="ml-3 ">
+    <div className="ml-2 ">
       <div className="flex items-center justify-between">
         <div
           className="flex items-center gap-2 cursor-pointer"
@@ -71,8 +72,8 @@ const Folder = ({ folderData }) => {
           ) : (
             <FontAwesomeIcon icon={faAngleRight} />
           )}
-          <FontAwesomeIcon icon={faFolder} />
-          <p className="font-medium">{folderData.name}</p>
+          <FontAwesomeIcon icon={faFolder} className="h-4 text-gray-600" />
+          <p className="text-sm font-semibold">{folderData.name}</p>
         </div>
         <DropDown
           handleOnAddFileBtn={handleOnAddFileBtn}
@@ -91,14 +92,14 @@ const Folder = ({ folderData }) => {
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            className="ml-5 h-5 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-black"
+            className="ml-5 h-5 border border-gray-300  focus:outline-none focus:ring-[1px] focus:ring-black"
           />
           <button
             ref={buttonRef}
             onClick={() => handleCreateNewDoc(newName, showInput.docType)}
-            className=" p-1 text-[0.5rem] text-black rounded   border-2 border-black hover:bg-black hover:text-white"
+            className=" p-1 text-[0.4rem] text-black border-[1px] border-black   hover:bg-black hover:text-white"
           >
-            Add
+            <FontAwesomeIcon icon={faPlus} />
           </button>
         </div>
       )}

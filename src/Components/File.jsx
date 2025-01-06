@@ -21,7 +21,7 @@ const File = ({ file }) => {
   return (
     <div className="ml-4 mt-1 flex justify-between gap-5 cursor-pointer">
       <div
-        className="flex items-center gap-1"
+        className="text-gray-600 flex items-center gap-1"
         onClick={handleOnClickAndSetFile}
       >
         <FontAwesomeIcon icon={faFile} />
@@ -29,7 +29,7 @@ const File = ({ file }) => {
       </div>
 
       <button
-        className="px-2 py-1 text-xs rounded hover:bg-red-200"
+        className="px-2 py-1 text-xs text-gray-500 rounded hover:bg-red-200"
         onClick={handleOnRemoveBtn}
       >
         <FontAwesomeIcon icon={faTrash} />

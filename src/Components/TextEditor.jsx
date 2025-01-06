@@ -53,7 +53,7 @@ const TextEditor = () => {
   }, []); // Empty dependency array ensures this effect runs once
 
   return (
-    <div className="w-full h-full p-4 border rounded shadow  mx-auto ">
+    <div className="w-full h-full p-4 border  mx-auto ">
       <div className="flex space-x-2 mb-4">
         <button
           onClick={() => applyCommand("bold")}
