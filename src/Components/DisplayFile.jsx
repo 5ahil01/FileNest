@@ -1,15 +1,13 @@
 import React from "react";
+import TextEditor from "./TextEditor";
 
-const DisplayFile = ({ activeFileData }) => {
-  console.log(activeFileData);
+const DisplayFile = ({ activeFileData, tabListLength }) => {
   return (
-    <div className="flex-1 border-2 border-black">
-      {activeFileData && (
-        <div>
-          {activeFileData.id} -- {activeFileData.name}
-        </div>
+    <div className="flex-1 ">
+      {activeFileData && tabListLength > 0 && (
+        <TextEditor activeFile={activeFileData} />
       )}
-      {!activeFileData && (
+      {(!activeFileData || tabListLength === 0) && (
         <div className="w-full h-full flex items-center justify-center">
           <p className="text-xl">Select any file from folder manager</p>
         </div>

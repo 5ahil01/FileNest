@@ -3,117 +3,157 @@ import { createContext, useReducer } from "react";
 export const folderContext = createContext();
 
 function folderReducer(state, action) {
-  if (
-    state.folders.find((folder) => folder.name === action.payload.newfolderName)
-  ) {
-    console.log("A folder with given name exist");
-    return state;
-  }
-  if (action.type == "ADD_FOLDER") {
-    const newFolder = {
-      id: state.folders.length,
-      name: action.payload.newfolderName,
-      childern: [],
-      files: [],
-      parentId: action.payload.folderId,
-    };
-    const updatedFolders = [...state.folders, newFolder];
-    return { ...state, folders: [...updatedFolders] };
-  }
+  switch (action.type) {
+    case "ADD_FOLDER": {
+      if (
+        state.folders.find(
+          (folder) => folder.name === action.payload.newfolderName
+        )
+      ) {
+        console.log("A folder with given name exist");
+        return state;
+      }
 
-  if (action.type == "ADD_FILE") {
-    const folderIndex = state.folders.findIndex(
-      (folder) => folder.id === action.payload.folderId
-    );
-    if (folderIndex == -1) {
-      return state;
+      const newFolder = {
+        id: state.folders.length,
+        name: action.payload.newfolderName,
+        childern: [],
+        files: [],
+        parentId: action.payload.folderId,
+      };
+      const updatedFolders = [...state.folders, newFolder];
+      return { ...state, folders: [...updatedFolders] };
     }
 
-    const updatedFolders = [...state.folders];
+    case "ADD_FILE": {
+      const folderIndex = state.folders.findIndex(
+        (folder) => folder.id === action.payload.folderId
+      );
+      if (folderIndex === -1) {
+        return state;
+      }
 
-    const selectedFolder = updatedFolders[folderIndex];
+      const updatedFolders = [...state.folders];
+      const selectedFolder = updatedFolders[folderIndex];
 
-    if (
-      selectedFolder.files.find(
-        (file) => file.name === action.payload.newFileName
-      )
-    ) {
-      console.log("A file with given name exist");
-      return state;
+      if (
+        selectedFolder.files.find(
+          (file) => file.name === action.payload.newFileName
+        )
+      ) {
+        console.log("A file with given name exist");
+        return state;
+      }
+
+      const newFile = {
+        id: `${selectedFolder.name}-${selectedFolder.files.length}`,
+        name: action.payload.newFileName,
+        content: "",
+        parentId: action.payload.folderId,
+        parentFolderName: action.payload.parentFolderName,
+      };
+
+      const updatedFolder = {
+        ...selectedFolder,
+        files: [...selectedFolder.files, newFile],
+      };
+
+      updatedFolders[folderIndex] = updatedFolder;
+      return { ...state, folders: updatedFolders };
     }
 
-    const newFile = {
-      id: `${selectedFolder.name}-${selectedFolder.files.length}`,
-      name: action.payload.newFileName,
-      content: "",
-      parentId: action.payload.folderId,
-      parentFolderName: action.payload.parentFolderName,
-    };
-
-    const updatedFolder = {
-      ...selectedFolder,
-      files: [...selectedFolder.files, newFile],
-    };
-
-    updatedFolders[folderIndex] = updatedFolder;
-    return { ...state, folders: updatedFolders };
-  }
-
-  if (action.type == "REMOVE_FOLDER") {
-    const updatedFolders = state.folders.filter(
-      (folder) => folder.id !== action.payload.folderId
-    );
-
-    return { ...state, folders: updatedFolders };
-  }
-
-  if (action.type == "REMOVE_FILE") {
-    const folderIndex = state.folders.findIndex(
-      (folder) => folder.id === action.payload.folderId
-    );
-    if (folderIndex == -1) {
-      return state;
+    case "REMOVE_FOLDER": {
+      const updatedFolders = state.folders.filter(
+        (folder) => folder.id !== action.payload.folderId
+      );
+      return { ...state, folders: updatedFolders };
     }
-    const updatedFolders = state.folders.map((folder, index) =>
-      index === folderIndex
-        ? {
-            ...folder,
-            files: folder.files.filter(
-              (file) => file.id !== action.payload.removeFileId
-            ),
-          }
-        : folder
-    );
 
-    return { ...state, folders: updatedFolders };
-  }
+    case "REMOVE_FILE": {
+      const folderIndex = state.folders.findIndex(
+        (folder) => folder.id === action.payload.folderId
+      );
+      if (folderIndex === -1) {
+        return state;
+      }
 
-  if (action.type == "PUSH_TO_TABLIST") {
-    if (state.tabList.includes(action.payload.file)) {
-      return state;
+      const updatedFolders = state.folders.map((folder, index) =>
+        index === folderIndex
+          ? {
+              ...folder,
+              files: folder.files.filter(
+                (file) => file.id !== action.payload.removeFileId
+              ),
+            }
+          : folder
+      );
+
+      return { ...state, folders: updatedFolders };
     }
-    return { ...state, tabList: [...state.tabList, action.payload.file] };
-  }
 
-  if (action.type == "REMOVE_FROM_TABLIST") {
-    const updatedList = state.tabList.filter(
-      (tab) => tab.id !== action.payload.tabId
-    );
-    return { ...state, tabList: updatedList };
-  }
+    case "PUSH_TO_TABLIST": {
+      if (state.tabList.includes(action.payload.file)) {
+        return state;
+      }
+      return { ...state, tabList: [...state.tabList, action.payload.file] };
+    }
 
-  return state;
+    case "REMOVE_FROM_TABLIST": {
+      const updatedList = state.tabList.filter(
+        (tab) => tab.id !== action.payload.tabId
+      );
+      return { ...state, tabList: updatedList };
+    }
+
+    case "SET_ACTIVE_FILE": {
+      return { ...state, activeFile: action.payload.file };
+    }
+
+    case "SAVE_FILE": {
+      console.log(action.payload);
+      const updatedFolders = state.folders.map((folder) => {
+        return folder.id === action.payload.folderId
+          ? {
+              ...folder,
+              files: folder.files.map((file) =>
+                file.id === action.payload.fileId
+                  ? { ...file, content: action.payload.updatedFileContent }
+                  : file
+              ),
+            }
+          : folder;
+      });
+
+      const folderX = updatedFolders.find(
+        (folder) => folder.id === action.payload.folderId
+      );
+
+      return {
+        ...state,
+        activeFile: {
+          ...state.activeFile,
+          content: action.payload.updatedFileContent,
+        },
+        folders: updatedFolders,
+      };
+    }
+
+    default:
+      return state;
+  }
 }
 
 export function FolderManagerContextProvider({ children }) {
   const [manager, dispatch] = useReducer(folderReducer, {
     folders: [],
     tabList: [],
+    activeFile: null,
   });
 
   const values = {
     tabList: manager.tabList,
     folders: manager.folders,
+    activeFile: manager.activeFile,
     addFolder: (newfolderName, folderId) =>
       dispatch({ type: "ADD_FOLDER", payload: { newfolderName, folderId } }),
     addFile: (newFileName, folderId, parentFolderName) =>
@@ -129,6 +169,13 @@ export function FolderManagerContextProvider({ children }) {
       dispatch({ type: "PUSH_TO_TABLIST", payload: { file } }),
     removeFileFromTabList: (tabId) =>
       dispatch({ type: "REMOVE_FROM_TABLIST", payload: { tabId } }),
+    setActiveFile: (file) =>
+      dispatch({ type: "SET_ACTIVE_FILE", payload: { file } }),
+    saveFile: (folderId, fileId, updatedFileContent) =>
+      dispatch({
+        type: "SAVE_FILE",
+        payload: { folderId, fileId, updatedFileContent },
+      }),
   };
 
   return (

@@ -1,16 +1,11 @@
 import React from "react";
 import Tab from "./Tab";
 
-const Tabs = ({ tabList, handleOnClickTab, removeFileFromTabList }) => {
+const Tabs = ({ tabList, activeFile }) => {
   return (
-    <ul className="flex w-full h-8 border-2 border-black">
+    <ul className="flex w-full h-10 bg-gray-100">
       {tabList.map((tab) => (
-        <Tab
-          tabData={tab}
-          key={tab.id}
-          handleOnClickTab={handleOnClickTab}
-          removeFileFromTabList={removeFileFromTabList}
-        />
+        <Tab tabData={tab} key={tab.id} activeFile={activeFile} />
       ))}
     </ul>
   );

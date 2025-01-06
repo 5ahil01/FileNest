@@ -2,23 +2,16 @@ import React, { useState, useContext, useRef } from "react";
 import { folderContext } from "../Store/FolderManagerContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faTrash,
   faFolder,
-  faPlus,
   faAngleDown,
   faAngleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import File from "./File";
+import DropDown from "./DropDown";
 
 const Folder = ({ folderData }) => {
-  const {
-    folders,
-    addFolder,
-    addFile,
-    removeFile,
-    removeFolder,
-    addFileToTabList,
-  } = useContext(folderContext);
+  const { folders, addFolder, addFile, removeFolder } =
+    useContext(folderContext);
   const [newName, setNewName] = useState("");
   const [showChildren, setShowChildren] = useState(false);
   const [showInput, setShowInput] = useState({
@@ -67,8 +60,8 @@ const Folder = ({ folderData }) => {
   }
 
   return (
-    <div className="ml-3">
-      <div className="flex items-center gap-2">
+    <div className="ml-3 ">
+      <div className="flex items-center justify-between">
         <div
           className="flex items-center gap-2 cursor-pointer"
           onClick={handleOnClickFolder}
@@ -81,27 +74,13 @@ const Folder = ({ folderData }) => {
           <FontAwesomeIcon icon={faFolder} />
           <p className="font-medium">{folderData.name}</p>
         </div>
-        <div className="ml-4 flex items-center gap-2">
-          <button
-            className="flex items-center gap-1 px-2 py-1 text-xs bg-black text-white rounded hover:bg-blue-600"
-            onClick={() => handleOnAddFileBtn("file")}
-          >
-            <FontAwesomeIcon icon={faPlus} /> File
-          </button>
-          <button
-            className="flex items-center gap-1 px-2 py-1 text-xs bg-black text-white rounded hover:bg-green-600"
-            onClick={() => handleOnAddFileBtn("folder")}
-          >
-            <FontAwesomeIcon icon={faPlus} /> Folder
-          </button>
-          <button
-            className="px-2 py-1 text-xs bg-black text-white rounded hover:bg-red-600"
-            onClick={() => removeFolder(folderData.id)}
-          >
-            <FontAwesomeIcon icon={faTrash} />
-          </button>
-        </div>
+        <DropDown
+          handleOnAddFileBtn={handleOnAddFileBtn}
+          removeFolder={removeFolder}
+          folderData={folderData}
+        />
       </div>
+
       {showInput.input && (
         <div
           className="mt-2 flex items-center gap-2"
@@ -112,12 +91,12 @@ const Folder = ({ folderData }) => {
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            className="border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="ml-5 h-5 border border-gray-300  focus:outline-none focus:ring-2 focus:ring-black"
           />
           <button
             ref={buttonRef}
             onClick={() => handleCreateNewDoc(newName, showInput.docType)}
-            className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"
+            className=" p-1 text-[0.5rem] text-black rounded   border-2 border-black hover:bg-black hover:text-white"
           >
             Add
           </button>
@@ -135,11 +114,7 @@ const Folder = ({ folderData }) => {
           <ul className="ml-4">
             {childrenFiles.map((file) => (
               <li key={file.id}>
-                <File
-                  file={file}
-                  removeFile={() => removeFile(folderData.id, file.id)}
-                  handleOnClickFile={() => addFileToTabList(file)}
-                />
+                <File file={file} />
               </li>
             ))}
           </ul>
