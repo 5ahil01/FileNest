@@ -102,6 +102,15 @@ function folderReducer(state, action) {
       const updatedList = state.tabList.filter(
         (tab) => tab.id !== action.payload.tabId
       );
+
+      //If activeFile is remove
+      const fileToBeRemove = state.tabList.find(
+        (tab) => tab.id === action.payload.tabId
+      );
+      if (state.activeFile.id === fileToBeRemove.id) {
+        return { ...state, tabList: updatedList, activeFile: updatedList[0] };
+      }
+
       return { ...state, tabList: updatedList };
     }
 

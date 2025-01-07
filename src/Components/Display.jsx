@@ -6,9 +6,16 @@ import DisplayFile from "./DisplayFile";
 const Display = () => {
   const { tabList, activeFile } = useContext(folderContext);
   return (
-    <div className="p-[0.10rem] flex flex-col relative w-full h-screen overflow-hidden bg-gray-100">
-      <Tabs tabList={tabList} activeFile={activeFile} />
-      <DisplayFile activeFileData={activeFile} tabListLength={tabList.length} />
+    <div className="h-screen flex flex-col bg-gray-100">
+      <div className="p-4">
+        <Tabs tabList={tabList} activeFile={activeFile} />
+      </div>
+      <div className="flex-1 p-4">
+        <DisplayFile
+          activeFileData={activeFile}
+          tabListLength={tabList.length}
+        />
+      </div>
     </div>
   );
 };

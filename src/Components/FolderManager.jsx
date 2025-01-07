@@ -20,7 +20,7 @@ const FolderManager = () => {
     setFolderName("");
   }
 
-  function handleOnBlur() {
+  function handleOnBlur(e) {
     if (buttonRef.current && buttonRef.current.contains(e.relatedTarget)) {
       return;
     }
@@ -29,8 +29,8 @@ const FolderManager = () => {
   }
 
   return (
-    <div className="p-6 min-h-screen border-r-[0.5px] border-gray-200">
-      <p className="text-3xl font-semibold mb-4">Files and Docs</p>
+    <div className="w-full md:w-80 p-4 md:p-6 border-b md:border-r md:border-b-0 border-gray-200 bg-white">
+      <p className="text-2xl md:text-3xl font-semibold mb-4">FileNest</p>
 
       <div className="mb-2">
         <div>
@@ -39,25 +39,25 @@ const FolderManager = () => {
               <p className="font-semibold text-sm">New Folder</p>
               <button
                 onClick={() => setIsInput(true)}
-                className=" p-1 text-2  rounded  text-white flex justify-center   "
+                className="p-1 rounded text-white"
               >
                 <FontAwesomeIcon icon={faPlus} className="text-teal-300" />
               </button>
             </div>
           )}
           {isInput && (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-2">
               <input
                 type="text"
                 placeholder="Enter folder name"
-                className="h-5 p-3 w-[80%] border border-gray-300  focus:outline-none focus:ring-2 focus:ring-black"
+                className="h-8 px-3 flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black rounded"
                 onChange={(e) => setFolderName(e.target.value)}
-                onBlur={handleOnBlur}
+                onBlur={(e) => handleOnBlur(e)}
               />
               <button
                 ref={buttonRef}
                 onClick={createNewFolder}
-                className=" p-2 rounded-sm bg-black text-white flex justify-center   "
+                className="p-2 rounded-sm bg-black text-white"
               >
                 <FontAwesomeIcon icon={faPlus} className="h-2" />
               </button>
@@ -66,7 +66,7 @@ const FolderManager = () => {
         </div>
       </div>
 
-      <ul className="w-64">
+      <ul className="w-full">
         {rootFolders.map((folder) => (
           <li key={folder.id} className="bg-white">
             <Folder folderData={folder} />

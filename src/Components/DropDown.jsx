@@ -4,19 +4,30 @@ import { faEllipsis, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const Dropdown = ({ handleOnAddFileBtn, removeFolder, folderData }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const buttonRef = useRef(null);
+  const dropdownRef = useRef(null);
 
-  function handleOnBlur() {
-    if (buttonRef.current && buttonRef.current.contains(e.relatedTarget)) {
-      return;
+  // Close dropdown if clicked outside
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsOpen(false);
     }
-    setIsOpen(false);
-  }
+  };
+
+  React.useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="relative inline-block text-left" onBlur={handleOnBlur}>
+    <div className="relative inline-block text-left" ref={dropdownRef}>
       {/* Ellipsis Button */}
       <button
-        ref={buttonRef}
         onClick={() => setIsOpen((prev) => !prev)}
         className="p-2 rounded hover:bg-gray-200"
       >
@@ -27,7 +38,6 @@ const Dropdown = ({ handleOnAddFileBtn, removeFolder, folderData }) => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-40 bg-white border rounded shadow-lg z-10">
           <button
-            ref={buttonRef}
             className="flex items-center gap-1 w-full px-4 py-2 text-left text-xs hover:bg-green-200"
             onClick={() => {
               handleOnAddFileBtn("file");
@@ -37,7 +47,6 @@ const Dropdown = ({ handleOnAddFileBtn, removeFolder, folderData }) => {
             <FontAwesomeIcon icon={faPlus} /> File
           </button>
           <button
-            ref={buttonRef}
             className="flex items-center gap-1 w-full px-4 py-2 text-left text-xs hover:bg-green-200"
             onClick={() => {
               handleOnAddFileBtn("folder");

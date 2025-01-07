@@ -53,8 +53,8 @@ const TextEditor = () => {
   }, []); // Empty dependency array ensures this effect runs once
 
   return (
-    <div className="w-full h-full p-4 border  mx-auto ">
-      <div className="flex space-x-2 mb-4">
+    <div className="h-full flex flex-col">
+      <div className="flex flex-wrap items-center gap-2 p-2 bg-white border-b">
         <button
           onClick={() => applyCommand("bold")}
           className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded"

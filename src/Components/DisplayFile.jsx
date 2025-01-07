@@ -8,7 +8,7 @@ const DisplayFile = ({ activeFileData, tabListLength }) => {
         <TextEditor activeFile={activeFileData} />
       )}
       {(!activeFileData || tabListLength === 0) && (
-        <div className="w-full h-full flex items-center justify-center">
+        <div className="w-full h-full flex items-center justify-center ">
           <p className="text-xl">Select any file from folder manager</p>
         </div>
       )}
