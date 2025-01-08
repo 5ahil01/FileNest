@@ -19,7 +19,7 @@ const File = ({ file }) => {
   }
 
   return (
-    <div className="ml-4 mt-1 flex justify-between gap-5 cursor-pointer">
+    <div className="ml-4 mt-3 flex justify-between gap-5 cursor-pointer">
       <div
         className="text-gray-600 flex items-center gap-1"
         onClick={handleOnClickAndSetFile}

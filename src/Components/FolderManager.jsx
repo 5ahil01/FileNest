@@ -57,9 +57,9 @@ const FolderManager = () => {
               <button
                 ref={buttonRef}
                 onClick={createNewFolder}
-                className="p-2 rounded-sm bg-black text-white"
+                className="p-[0.4rem]  rounded-sm bg-black text-xs text-white"
               >
-                <FontAwesomeIcon icon={faPlus} className="h-2" />
+                <FontAwesomeIcon icon={faPlus} />
               </button>
             </div>
           )}

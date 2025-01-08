@@ -92,7 +92,7 @@ const Folder = ({ folderData }) => {
             type="text"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
-            className="ml-5 h-5 border border-gray-300  focus:outline-none focus:ring-[1px] focus:ring-black"
+            className="ml-5 h-5 w-[60%] border border-gray-300  focus:outline-none focus:ring-[1px] focus:ring-black"
           />
           <button
             ref={buttonRef}
