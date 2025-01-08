@@ -18,7 +18,6 @@ const TextEditor = () => {
 
   useEffect(() => {
     if (activeFile) {
-      console.log(activeFile.name, "Inside of If");
       const sanitizedContent = DOMPurify.sanitize(activeFile.content);
       setContent(sanitizedContent);
 
