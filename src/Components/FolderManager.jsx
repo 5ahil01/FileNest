@@ -46,11 +46,11 @@ const FolderManager = () => {
             </div>
           )}
           {isInput && (
-            <div className="flex items-center justify-between gap-2 border-2 ">
+            <div className="flex items-center justify-between gap-2  ">
               <input
                 type="text"
                 placeholder="Enter folder name"
-                className="h-8 w-[60%] px-3 flex-1 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-black rounded"
+                className="h-8 w-[60%] px-3 flex-1 border  border-gray-300 focus:outline-none focus:ring-2 focus:ring-black rounded"
                 onChange={(e) => setFolderName(e.target.value)}
                 onBlur={(e) => handleOnBlur(e)}
               />

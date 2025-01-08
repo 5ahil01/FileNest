@@ -10,7 +10,7 @@ const Display = () => {
       <div className="p-4">
         <Tabs tabList={tabList} activeFile={activeFile} />
       </div>
-      <div className="flex-1 p-4">
+      <div className="flex-1 p-4 ">
         <DisplayFile
           activeFileData={activeFile}
           tabListLength={tabList.length}
